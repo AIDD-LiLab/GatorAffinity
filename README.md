@@ -1,18 +1,20 @@
 # GatorAffinity
 
 A geometric deep learning model for protein-ligand binding affinity prediction, leveraging **unprecedented large-scale synthetic structural data**.
+
 ![](./assets/flowchart.png)
+
 ## Breakthrough: Synthetic Dataset at Scale
 
 ![](./assets/dataset.png)
-- **450K+ $K_{d}/K_{i}$ complexes** generated using Boltz-1 structure prediction [[4]](#references)
-- **1M+ $IC_{50}$ complexes** from SAIR database [[1]](#references)
-- **Total: 1.5M synthetic protein-ligand pairs for pre-training**
 
+- **450K+ Kd/Ki complexes** generated using Boltz-1 [[4]](#references) structure prediction 
+- **1M+ IC50 complexes** from SAIR database [[1]](#references)  
+- **Total: 1.5M synthetic protein-ligand pairs for pre-training**
 
 ## Installation
 
-### Clone the GitHub Repository:
+### Environment:
 ```bash
 git clone https://github.com/AIDD-LiLab/GatorAffinity.git
 cd GatorAffinity
@@ -21,30 +23,41 @@ bash environment.sh
 
 ### Data Download
 
-<!-- This section is intentionally left blank for the user to fill in -->
+#### Original Structural Data
+1. **GatorAffinity-DB Complete Original Data**  
+   🔗 https://huggingface.co/datasets/AIDDLiLab/GatorAffinity
+
+2. **SAIR Complete Original Data**  
+   🔗 https://www.sandboxaq.com/sair
+
+#### Preprocessed Kd+Ki+IC50 Pre-training Data
+🔗 https://huggingface.co/datasets/AIDDLiLab/Gatoraffinity-Processed-Data
 
 ## Usage
 
 ### Training
 ```bash
-python train.py --train_set_path train.pkl --valid_set_path valid.pkl --pretrain_ckpt check_points/epoch6_step1148.ckpt
+python train.py \
+    --train_set_path train.pkl \
+    --valid_set_path valid.pkl \
+    --pretrain_ckpt check_points/epoch6_step1148.ckpt
 ```
 
 ### Inference
 ```bash
-python inference.py --model_ckpt check_points/epoch6_step1148.ckpt --test_set_path test_data/test.pkl
+python inference.py \
+    --model_ckpt check_points/epoch6_step1148.ckpt \
+    --test_set_path test_data/test.pkl
 ```
 
-
 ### Custom Data Processing
-
-<!-- This section is intentionally left blank for the user to fill in -->
+<!-- This section is intentionally left blank for users to customize based on their specific data processing needs -->
 
 ## Performance
 
 **State-of-the-art on filtered LP-PDBBind [[2]](#references):**
-![](./assets/lp_pdbbind.png)
 
+![](./assets/lp_pdbbind.png)
 
 ## Citation
 
@@ -56,9 +69,6 @@ python inference.py --model_ckpt check_points/epoch6_step1148.ckpt --test_set_pa
   year={2024}
 }
 ```
-
-
-
 
 ## References
 
