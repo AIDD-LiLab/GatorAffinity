@@ -6,7 +6,7 @@ A geometric deep learning model for protein-ligand binding affinity prediction, 
 
 ![](./assets/flowchart.png)
 
-## Breakthrough: Synthetic Dataset at Scale
+## Synthetic Dataset at Scale
 
 ![](./assets/dataset.png)
 
@@ -26,31 +26,28 @@ bash environment.sh
 ### Data Download
 
 #### Original Structural Data
-1. **GatorAffinity-DB Complete Original Data**  
-    https://huggingface.co/datasets/AIDDLiLab/GatorAffinity-DB
-
-2. **SAIR Complete Original Data**  
-    https://www.sandboxaq.com/sair
+1. **[GatorAffinity-DB Complete Original Data](https://huggingface.co/datasets/AIDDLiLab/GatorAffinity-DB)**
+2. **[SAIR Complete Original Data](https://www.sandboxaq.com/sair)**
 
 #### Preprocessed Data
-1. **Kd+Ki+IC50 For Pre-training **  
-    https://huggingface.co/datasets/AIDDLiLab/Gatoraffinity-Processed-Data
-
-2. **filtered LP-PDBbind For Fine-tuning **  
-    https://huggingface.co/datasets/AIDDLiLab/Gatoraffinity-Processed-Data
+1. **[Kd+Ki+IC50 For Pre-training](https://huggingface.co/datasets/AIDDLiLab/GatorAffinity-Processed-Data)**
+2. **filtered LP-PDBbind For Fine-tuning** - `./LP-PDBbind`
 
 
+## Model Checkpoints
 
+### Pre-trained Models
+- **Base model**: Pre-trained on IC50+Kd+Ki datasets  
+  `./model_checkpoints/Kd+Ki+IC50_pretrain.ckpt`
 
-### Model Checkpoints Download
+- **Fine-tuned model** (best performance): Pre-trained on IC50+Kd+Ki, fine-tuned on experimental structures with LP-PDBbind split  
+  `./model_checkpoints/Kd+Ki+IC50_experimental_fine_tuning.ckpt`
 
-#### ATOMICA的原子尺度分子相互作用的通用表示模型
-我们使用该预训练的表示模型作为GatorAffinity的backbone，模型参数可以在这里下载: https://huggingface.co/ada-f/ATOMICA/tree/main/ATOMICA_checkpoints/pretrain
-我们论文的实验表明，在预训练结构数据较少时候，使用该预训练的表示模型可以有效提升模型性能，但收益随着预训练结构的增加而递减
+### ATOMICA Backbone
+ATOMICA-Universal atomic scale molecular interaction representation model used as GatorAffinity's backbone.  
+**[Download ATOMICA Checkpoints](https://huggingface.co/ada-f/ATOMICA/tree/main/ATOMICA_checkpoints/pretrain)**
 
-#### GatorAffinity在IC50+Kd+Ki上预训练后的模型
-
-#### GatorAffinity在IC50+Kd+Ki上预训练后并根据LP-PDBbind划分在experimental structure上微调的模型(最优性能)
+**Note**: Our experiments show that ATOMICA backbone significantly improves performance with limited pre-training structures, though benefits diminish as synthetic training data increases.
 
 
 ## Usage
@@ -61,26 +58,78 @@ bash environment.sh
 ### Training
 ```bash
 python train.py \
-    --train_set_path train.pkl \
-    --valid_set_path valid.pkl \
-    --pretrain_ckpt check_points/epoch6_step1148.ckpt
+    --train_set_path LP-PDBbind/train.pkl \
+    --valid_set_path LP-PDBbind/valid.pkl \
+    --pretrain_ckpt model_checkpoints/Kd+Ki+IC50_pretrain.ckpt
 ```
 
 ### Inference
 ```bash
 python inference.py \
-    --model_ckpt check_points/epoch6_step1148.ckpt \
-    --test_set_path test_data/test.pkl
+    --model_ckpt model_checkpoints/Kd+Ki+IC50_experimental_fine_tuning.ckpt \
+    --test_set_path LP-PDBbind/test.pkl
 ```
 
 ### Custom Data Processing
-<!-- This section is intentionally left blank for users to customize based on their specific data processing needs -->
+
+GatorAffinity supports processing your own PDB data for training and inference. The processing script can handle both individual ligand/pocket processing and combined processing modes.
+
+#### Data Format
+
+Create a CSV file with the following columns for combined processing:
+
+| Column | Description | Example |
+|--------|-------------|---------|
+| `pdb_file` | Path to PDB file | `/path/to/pdbs/1abc.pdb` |
+| `pdb_id` | PDB identifier | `1abc` |
+| `pocket_chain` | Protein chain(s) for pocket | `A` or `A_B` for multiple chains |
+| `lig_code` | Ligand residue name | `LIG`, `ATP`, `GDP` |
+| `lig_chain` | Ligand chain | `C`, `L` |
+| `smiles` | Ligand SMILES string | `CCO`, `c1ccccc1` |
+| `lig_resi` | Ligand residue number | `1`, `100` |
+
+#### Processing Your Data
+
+```bash
+python data/process_pdbs.py \
+    --data_index_file your_data.csv \
+    --out_path processed_data.pkl \
+    --fragmentation_method PS_300
+
+# The script automatically detects the format and processes accordingly
+```
+
+#### Example CSV Content
+
+```csv
+pdb_file,pdb_id,pocket_chain,lig_code,lig_chain,smiles,lig_resi
+/path/to/pdbs/1abc.pdb,1abc,A,LIG,C,CCO,1
+/path/to/pdbs/2def.pdb,2def,A_B,ATP,L,c1nc2c([nH]1)N(C(=O)N2)C,100
+```
+
 
 ## Performance
 
 **State-of-the-art on filtered LP-PDBbind [[2]](#references):**
 
 ![](./assets/lp_pdbbind.png)
+
+## License
+
+This repository is licensed under two different licenses:
+
+### Main Repository - MIT License
+The source code, documentation, and most files are licensed under the [MIT License](./LICENSE).
+
+### Model Checkpoints - CC BY-NC-SA 4.0
+The model checkpoints in the `./model_checkpoints/` directory are licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](./model_checkpoints/LICENSE).
+
+**Model checkpoints:**
+- `Kd+Ki+IC50_pretrain.ckpt`
+- `Kd+Ki+IC50_experimental_fine_tuning.ckpt`
+
+### Other Data
+For the license of other data, please refer to the specific license file provided by the repository.
 
 ## Citation
 

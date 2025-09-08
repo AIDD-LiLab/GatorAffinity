@@ -5,6 +5,7 @@ from tqdm import tqdm
 import os
 import sys
 import traceback
+import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from data.converter.pdb_lig_to_blocks import extract_pdb_ligand
@@ -12,8 +13,8 @@ from data.converter.pdb_to_list_blocks import pdb_to_list_blocks
 from data.dataset import blocks_interface, blocks_to_data
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Process PDB data for embedding with ATOMICA')
-    parser.add_argument('--data_index_file', type=str, default='LP-PDBbind/2016/test_pocket.csv')
+    parser = argparse.ArgumentParser(description='Process PDB data for embedding with ATOMICA - Combined ligand and pocket processing')
+    parser.add_argument('--data_index_file', type=str, default='LP-PDBbind/2016/test_combined.csv')
     parser.add_argument('--out_path', type=str, default='', help='Output path')
     parser.add_argument('--fragmentation_method', type=str, default='PS_300', choices=['PS_300'], help='fragmentation method for small molecule pockets')
     return parser.parse_args()
@@ -153,6 +154,95 @@ def process_single_row(row, fragmentation_method):
         traceback.print_exc()
         return [], str(e)
 
+def merge_ligand_pocket_features(ligand_item, pocket_item):
+    """
+    Merge ligand and pocket features into a single combined item
+    Based on merge_data.py logic
+    """
+    # Verify that base IDs match
+    ligand_id = ligand_item.get('id', '').split('_')[0]
+    pocket_id = pocket_item.get('id', '').split('_')[0]
+    if ligand_id != pocket_id:
+        raise ValueError(f"Mismatched IDs: {ligand_item.get('id')} vs {pocket_item.get('id')}")
+    
+    ld = ligand_item['data']
+    pd = pocket_item['data']
+    
+    # Concatenate features: X, B, A
+    combined_data = {
+        'X': np.concatenate([pd['X'], ld['X']], axis=0),
+        'B': np.concatenate([pd['B'], ld['B']], axis=0),
+        'A': np.concatenate([pd['A'], ld['A']], axis=0),
+        'block_lengths': pd['block_lengths'] + ld['block_lengths'],
+        'segment_ids': [0] * len(pd['block_lengths']) + [1] * len(ld['block_lengths']),
+    }
+    
+    return {
+        'id': ligand_id,
+        'data': combined_data,
+        'block_to_pdb_indexes': {**pocket_item.get('block_to_pdb_indexes', {}), **ligand_item.get('block_to_pdb_indexes', {})}
+    }
+
+def process_combined_row(row, fragmentation_method):
+    """
+    Process a single row that contains both ligand and pocket information
+    """
+    try:
+        pdb_file = row['pdb_file']
+        pdb_id = row['pdb_id']
+        
+        # Process pocket information
+        pocket_chain = row['pocket_chain'].split("_") if not pd.isna(row['pocket_chain']) else None
+        
+        # Process ligand information
+        lig_code = row['lig_code']
+        lig_chain = row['lig_chain'].split("_")[0] if not pd.isna(row['lig_chain']) else None
+        smiles = row['smiles']
+        lig_resi = int(row['lig_resi']) if not pd.isna(row['lig_resi']) else None
+        
+        # Process pocket
+        pocket_items = process_PL_pdb(
+            input_type='pocket',
+            pdb_file=pdb_file,
+            pdb_id=pdb_id,
+            rec_chain=pocket_chain,
+            lig_code=None,
+            lig_chain=None,
+            smiles=None,
+            lig_resi=None,
+            fragmentation_method=fragmentation_method
+        )
+        
+        # Process ligand
+        ligand_items = process_PL_pdb(
+            input_type='ligand',
+            pdb_file=pdb_file,
+            pdb_id=pdb_id,
+            rec_chain=None,
+            lig_code=lig_code,
+            lig_chain=lig_chain,
+            smiles=smiles,
+            lig_resi=lig_resi,
+            fragmentation_method=fragmentation_method
+        )
+        
+        if len(pocket_items) == 0 or len(ligand_items) == 0:
+            raise ValueError("Failed to process pocket or ligand")
+        
+        # For simplicity, take the first item from each (could be extended for multiple items)
+        pocket_item = pocket_items[0]
+        ligand_item = ligand_items[0]
+        
+        # Merge the features
+        combined_item = merge_ligand_pocket_features(ligand_item, pocket_item)
+        
+        return [combined_item], None
+        
+    except Exception as e:
+        print(f"Error processing combined row {row.name}: {str(e)}")
+        traceback.print_exc()
+        return [], str(e)
+
 def main(args):
     # 读取数据文件
     data_index_file = pd.read_csv(args.data_index_file)
@@ -161,17 +251,33 @@ def main(args):
     items = []
     failed_count = 0
     
-    print(f"Starting to process {total_rows} rows...")
-
-    for idx, (_, row) in enumerate(tqdm(data_index_file.iterrows(), 
-                                       total=total_rows, 
-                                       desc="Processing PDB files")):
-        pl_items, error = process_single_row(row, args.fragmentation_method)
-        
-        if not error:
-            items.extend(pl_items)
-        else:
-            failed_count += 1
+    print(f"Starting to process {total_rows} rows (combined ligand and pocket processing)...")
+    
+    # Check if this is the old format (with input_type) or new format (combined)
+    if 'input_type' in data_index_file.columns:
+        # Old format - use original processing
+        print("Using original processing mode (separate ligand/pocket files)")
+        for idx, (_, row) in enumerate(tqdm(data_index_file.iterrows(), 
+                                           total=total_rows, 
+                                           desc="Processing PDB files")):
+            pl_items, error = process_single_row(row, args.fragmentation_method)
+            
+            if not error:
+                items.extend(pl_items)
+            else:
+                failed_count += 1
+    else:
+        # New format - combined processing
+        print("Using combined processing mode (ligand and pocket in same row)")
+        for idx, (_, row) in enumerate(tqdm(data_index_file.iterrows(), 
+                                           total=total_rows, 
+                                           desc="Processing combined PDB files")):
+            combined_items, error = process_combined_row(row, args.fragmentation_method)
+            
+            if not error:
+                items.extend(combined_items)
+            else:
+                failed_count += 1
     
     print(f"\nProcessing complete!")
     print(f"Total rows: {total_rows}")
