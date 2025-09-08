@@ -72,7 +72,7 @@ python inference.py \
 
 ### Custom Data Processing
 
-GatorAffinity supports processing your own PDB data for training and inference. The processing script can handle both individual ligand/pocket processing and combined processing modes.
+GatorAffinity supports processing your own PDB data for training and inference.
 
 #### Data Format
 
