@@ -13,6 +13,9 @@ A geometric deep learning model for protein-ligand binding affinity prediction, 
 - **450K+ Kd/Ki complexes** generated using Boltz-1 [[4]](#references) structure prediction 
 - **1M+ IC50 complexes** from SAIR database [[1]](#references)  
 - **Total: 1.5M synthetic protein-ligand pairs for pre-training**
+<div style="text-align: center;">
+  <img src="./assets/scale.png" alt="GatorAffinity" width="400">
+</div>
 
 ## Installation
 
