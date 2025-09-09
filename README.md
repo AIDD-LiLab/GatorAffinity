@@ -1,8 +1,8 @@
-# <img src="./assets/icon.png" alt="GatorAffinity" width="50" align="center"/> GatorAffinity: Boosting the Protein-Ligand Binding Affinity Prediction with Synthetic Structural Data
+# GatorAffinity: Boosting the Protein-Ligand Binding Affinity Prediction with Synthetic Structural Data
 
 
 
-A geometric deep learning model for protein-ligand binding affinity prediction, leveraging **unprecedented large-scale synthetic structural data**.
+A geometric deep learning model for protein-ligand binding affinity prediction, leveraging **large-scale synthetic structural data**.
 
 ![](./assets/flowchart.png)
 
@@ -29,11 +29,11 @@ bash environment.sh
 ### Data Download
 
 #### Original Structural Data
-1. **[GatorAffinity-DB Complete Original Data](https://huggingface.co/datasets/AIDDLiLab/GatorAffinity-DB)**
+1. **[GatorAffinity-DB Complete Original Data](https://huggingface.co/datasets/AIDD-LiLab/GatorAffinity-DB)**
 2. **[SAIR Complete Original Data](https://www.sandboxaq.com/sair)**
 
 #### Preprocessed Data
-1. **[Kd+Ki+IC50 For Pre-training](https://huggingface.co/datasets/AIDDLiLab/GatorAffinity-Processed-Data)**
+1. **[Kd+Ki+IC50 For Pre-training](https://huggingface.co/datasets/AIDD-LiLab/GatorAffinity-Processed-Data)**
 2. **filtered LP-PDBbind For Fine-tuning** - `./LP-PDBbind`
 
 
@@ -54,8 +54,6 @@ ATOMICA-Universal atomic scale molecular interaction representation model used a
 
 
 ## Usage
-
-
 
 
 ### Training
@@ -134,14 +132,16 @@ The model checkpoints in the `./model_checkpoints/` directory are licensed under
 ### Other Data
 For the license of other data, please refer to the specific license file provided by the repository.
 
+<mark>
 ## Citation
+</mark>
 
 ```bibtex
 @article{gatoraffinity2025,
   title={GatorAffinity: Boosting the Protein-Ligand Binding Affinity Prediction with Synthetic Structural Data},
   author={Anonymous},
   journal={Arxiv},
-  year={2024}
+  year={2025}
 }
 ```
 
