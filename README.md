@@ -157,4 +157,4 @@ For the license of other data, please refer to the specific license file provide
 
 ## Acknowledgments
 
-This work builds upon the ATOMICA framework [[3]](#references) for learning universal representations of intermolecular interactions. We thank the ATOMICA authors for making their codebase available at https://github.com/mims-harvard/ATOMICA.
+This work builds upon the [ATOMICA](https://github.com/mims-harvard/ATOMIC) framework for learning universal representations of intermolecular interactions. We thank the ATOMICA authors for making their codebase available.
