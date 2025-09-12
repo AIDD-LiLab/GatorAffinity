@@ -33,7 +33,7 @@ bash environment.sh
 2. **[SAIR Complete Original Data](https://www.sandboxaq.com/sair)**
 
 #### Preprocessed Data
-1. **[Kd+Ki+IC50 For Pre-training](https://huggingface.co/datasets/AIDD-LiLab/GatorAffinity-Processed-Data)**
+1. **[Synthetic kd+Ki+IC50 data for GatorAffinity Pre-training](https://huggingface.co/datasets/AIDD-LiLab/GatorAffinity-Processed-For-Pretraining)**
 2. **filtered LP-PDBbind For Fine-tuning** - `./LP-PDBbind`
 
 
