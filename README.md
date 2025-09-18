@@ -1,4 +1,4 @@
-# GatorAffinity: Boosting the Protein-Ligand Binding Affinity Prediction with Synthetic Structural Data
+# GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data
 
 
 
