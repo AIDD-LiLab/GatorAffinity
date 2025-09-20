@@ -132,14 +132,12 @@ The model checkpoints in the `./model_checkpoints/` directory are licensed under
 ### Other Data
 For the license of other data, please refer to the specific license file provided by the repository.
 
-<mark>
 ## Citation
-</mark>
 
 ```bibtex
-@article{gatoraffinity2025,
-  title={GatorAffinity: Boosting the Protein-Ligand Binding Affinity Prediction with Synthetic Structural Data},
-  author={Anonymous},
+@article{wei2025gatoraffinity,
+  title={GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data},
+  author={Wei, Jinhang and Zhang, Yupu and Ramdhan, Peter A and Huang, Zihang and Seabra, Gustavo and Jiang, Zhe and Li, Chenglong and Li, Yanjun},
   journal={Arxiv},
   year={2025}
 }
