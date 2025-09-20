@@ -138,7 +138,7 @@ For the license of other data, please refer to the specific license file provide
 @article{wei2025gatoraffinity,
   title={GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data},
   author={Wei, Jinhang and Zhang, Yupu and Ramdhan, Peter A and Huang, Zihang and Seabra, Gustavo and Jiang, Zhe and Li, Chenglong and Li, Yanjun},
-  journal={Arxiv},
+  journal={arXiv preprint},
   year={2025}
 }
 ```
