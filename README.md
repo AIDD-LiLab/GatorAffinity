@@ -1,7 +1,7 @@
 # GatorAffinity
 
 **GatorAffinity** is a geometric deep learning model for protein–ligand binding affinity prediction. 
-It leverages large-scale synthetic structural data, including over 1.45 million protein–ligand complexes sourced from the newly released **GatorAffinity-DB** (over 450,000 complexes with K<sub>d</sub>/K<sub>i</sub> values) and the SAIR dataset (over 1 million IC<sub>50</sub>-annotated complexes). 
+It leverages large-scale synthetic structural data, including over 1.45 million protein–ligand complexes sourced from the jointly released [GatorAffinity-DB](https://huggingface.co/datasets/AIDD-LiLab/GatorAffinity-DB) (over 450,000 complexes with K<sub>d</sub>/K<sub>i</sub> values) and the SAIR dataset (over 1 million IC<sub>50</sub>-annotated complexes). 
 The model is pre-trained on these synthetic complexes and subsequently fine-tuned using experimental structures from PDBbind, enabling accurate and generalizable affinity prediction.
 For further details, please refer to the [GatorAffinity](https://www.biorxiv.org/content/10.1101/2025.09.29.679384v1) paper.
 
