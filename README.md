@@ -1,8 +1,9 @@
-# GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data
+# GatorAffinity
 
-
-
-A geometric deep learning model for protein-ligand binding affinity prediction, leveraging **large-scale synthetic structural data**.
+**GatorAffinity** is a geometric deep learning model for protein–ligand binding affinity prediction. 
+It leverages large-scale synthetic structural data, including over 1.45 million protein–ligand complexes sourced from the newly released **GatorAffinity-DB** (over 450,000 complexes with K<sub>d</sub>/K<sub>i</sub> values) and the SAIR dataset (over 1 million IC<sub>50</sub>-annotated complexes). 
+The model is pre-trained on these synthetic complexes and subsequently fine-tuned using experimental structures from PDBbind, enabling accurate and generalizable affinity prediction.
+For further details, please refer to the [GatorAffinity](https://www.biorxiv.org/content/10.1101/2025.09.29.679384v1) paper.
 
 ![](./assets/flowchart.png)
 
@@ -132,16 +133,6 @@ The model checkpoints in the `./model_checkpoints/` directory are licensed under
 ### Other Data
 For the license of other data, please refer to the specific license file provided by the repository.
 
-## Citation
-
-```bibtex
-@article{wei2025gatoraffinity,
-  title={GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data},
-  author={Wei, Jinhang and Zhang, Yupu and Ramdhan, Peter A and Huang, Zihang and Seabra, Gustavo and Jiang, Zhe and Li, Chenglong and Li, Yanjun},
-  journal={arXiv preprint},
-  year={2025}
-}
-```
 
 ## References
 
@@ -156,3 +147,14 @@ For the license of other data, please refer to the specific license file provide
 ## Acknowledgments
 
 This work builds upon [ATOMICA](https://github.com/mims-harvard/ATOMICA) framework. We thank the ATOMICA authors for making their codebase available.
+
+## Citation
+If you use the code or data in this package, please cite:
+```bibtex
+@article{wei2025gatoraffinity,
+  title={GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data},
+  author={Wei, Jinhang and Zhang, Yupu and Ramdhan, Peter A and Huang, Zihang and Seabra, Gustavo and Jiang, Zhe and Li, Chenglong and Li, Yanjun},
+  year={2025}
+  journal = {bioRxiv}
+}
+```
