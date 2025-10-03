@@ -72,7 +72,7 @@ python inference.py \
     --test_set_path LP-PDBbind/test.pkl
 ```
 
-### Custom Data Processing
+### Custom Data Processing(This part of the code merge has encountered an issue and is temporarily unavailable. It will be fixed within a few hours)
 
 GatorAffinity supports processing your own PDB data for training and inference.
 
