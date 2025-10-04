@@ -76,19 +76,28 @@ python inference.py \
 
 GatorAffinity supports processing your own PDB data for training and inference.
 
+#### Example Data
+
+We provide example data in `data/example/` to help you get started:
+- `1a4h_pocket_5A.pdb`, `1a4h_ligand.pdb`: Example protein pocket and ligand structure
+- `1bux_pocket_5A.pdb`, `1bux_ligand.pdb`: Example protein pocket and ligand structure
+- `example.csv`: Example data index file
+- `example.pkl`: Pre-processed example data
+
 #### Data Format
 
-Create a CSV file with the following columns for combined processing:
+Create a CSV file with the following columns:
 
 | Column | Description | Example |
 |--------|-------------|---------|
-| `pdb_file` | Path to PDB file | `/path/to/pdbs/1abc.pdb` |
-| `pdb_id` | PDB identifier | `1abc` |
-| `pocket_chain` | Protein chain(s) for pocket | `A` or `A_B` for multiple chains |
-| `lig_code` | Ligand residue name | `LIG`, `ATP`, `GDP` |
-| `lig_chain` | Ligand chain | `C`, `L` |
+| `pdb_id` | PDB identifier | `1a4h` |
+| `protein_pdb` | Path to protein pocket PDB file | `data/example/1a4h_pocket_5A.pdb` |
+| `ligand_pdb` | Path to ligand PDB file | `data/example/1a4h_ligand.pdb` |
+| `protein_chains` | Protein chain(s) for pocket | `A` or `A_B` for multiple chains |
+| `lig_code` | Ligand residue name | `UNL`, `LIG`, `ATP` |
 | `smiles` | Ligand SMILES string | `CCO`, `c1ccccc1` |
 | `lig_resi` | Ligand residue number | `1`, `100` |
+| `label` | Binding affinity label (pKd/pKi) | `5.92`, `4.85` |
 
 #### Processing Your Data
 
@@ -97,16 +106,15 @@ python data/process_pdbs.py \
     --data_index_file your_data.csv \
     --out_path processed_data.pkl \
     --fragmentation_method PS_300
-
-# The script automatically detects the format and processes accordingly
 ```
 
-#### Example CSV Content
+#### Example with Provided Data
 
-```csv
-pdb_file,pdb_id,pocket_chain,lig_code,lig_chain,smiles,lig_resi
-/path/to/pdbs/1abc.pdb,1abc,A,LIG,C,CCO,1
-/path/to/pdbs/2def.pdb,2def,A_B,ATP,L,c1nc2c([nH]1)N(C(=O)N2)C,100
+```bash
+python data/process_pdbs.py \
+    --data_index_file data/example/example.csv \
+    --out_path data/example/example.pkl \
+    --fragmentation_method PS_300
 ```
 
 

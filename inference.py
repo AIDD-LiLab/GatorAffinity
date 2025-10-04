@@ -23,9 +23,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description='PDBBind prediction')
     
     # Model loading options
-    parser.add_argument('--model_ckpt', type=str, default='check_points/epoch6_step1148.ckpt', help='path of the model ckpt to load')
+    parser.add_argument('--model_ckpt', type=str, default='model_checkpoints/Kd+Ki+IC50_experimental_fine_tuning.ckpt', help='path of the model ckpt to load')
 
-    parser.add_argument('--test_set_path', type=str, default='test_data/test.pkl', help='path to test set')
+    parser.add_argument('--test_set_path', type=str, default='data/example/example.pkl', help='path to test set')
     # Batch processing
     parser.add_argument('--batch_size', type=int, default=100, help='batch size')
     parser.add_argument('--seed', type=int, default=SEED)

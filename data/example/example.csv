@@ -1,0 +1,3 @@
+pdb_id,protein_pdb,ligand_pdb,protein_chains,lig_code,smiles,lig_resi,label
+1a4h,data/example/1a4h_pocket_5A.pdb,data/example/1a4h_ligand.pdb,A,UNL,COC1=C2C[C@H](C)C[C@H](OC)[C@H](O)[C@@H](C)C=C(C)[C@H](OC(N)=O)[C@@H](OC)C=CC=C(C)C(=O)NC(=CC1=O)C2=O,1,5.92
+1bux,data/example/1bux_pocket_5A.pdb,data/example/1bux_ligand.pdb,A,UNL,Nc1ncnc2c1ncn2[C@@H]1O[C@H](CO[P@](=O)(O)OS(=O)(=O)O)[C@@H](OP(=O)(O)O)[C@H]1O,1,4.85
