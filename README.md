@@ -104,8 +104,7 @@ Create a CSV file with the following columns:
 ```bash
 python data/process_pdbs.py \
     --data_index_file your_data.csv \
-    --out_path processed_data.pkl \
-    --fragmentation_method PS_300
+    --out_path processed_data.pkl
 ```
 
 #### Example with Provided Data
@@ -113,8 +112,7 @@ python data/process_pdbs.py \
 ```bash
 python data/process_pdbs.py \
     --data_index_file data/example/example.csv \
-    --out_path data/example/example.pkl \
-    --fragmentation_method PS_300
+    --out_path data/example/example.pkl
 ```
 
 
