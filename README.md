@@ -160,7 +160,9 @@ If you use the code or data in this package, please cite:
 @article{wei2025gatoraffinity,
   title={GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data},
   author={Wei, Jinhang and Zhang, Yupu and Ramdhan, Peter A and Huang, Zihang and Seabra, Gustavo and Jiang, Zhe and Li, Chenglong and Li, Yanjun},
-  year={2025}
-  journal = {bioRxiv}
+  journal={bioRxiv},
+  pages={2025--09},
+  year={2025},
+  publisher={Cold Spring Harbor Laboratory}
 }
 ```
