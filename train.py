@@ -24,10 +24,10 @@ def parse():
     parser = argparse.ArgumentParser(description='PDBBind Benchmark Training')
     
     # Data paths
-    parser.add_argument('--train_set_path', type=str, default=r'RNA-Ligand\train.pkl', 
+    parser.add_argument('--train_set_path', type=str, default='LP-PDBbind/train.pkl', 
                         help='Path to training dataset')
     parser.add_argument('--valid_set_path', type=str, 
-                        default=r'RNA-Ligand\test.pkl',
+                        default='LP-PDBbind/val.pkl',
                         help='Path to validation dataset')
     
     
