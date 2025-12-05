@@ -74,6 +74,7 @@ python inference.py \
 
 ### Custom Data Processing
 (Please note that the ligand you provide should not contain hydrogen atoms. A script for removing hydrogens is available at data/remove_h.py.)
+
 GatorAffinity supports processing your own PDB data for training and inference.
 
 #### Example Data
