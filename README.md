@@ -153,7 +153,7 @@ For the license of other data, please refer to the specific license file provide
 
 ## Acknowledgments
 
-This work builds upon [ATOMICA](https://github.com/mims-harvard/ATOMICA) framework. We thank the ATOMICA authors for making their codebase available. We also thank the [SAIR](https://huggingface.co/datasets/SandboxAQ/SAIR) authors for making their dataset accessible to the research community.
+This work builds upon [ATOMICA](https://github.com/mims-harvard/ATOMICA) framework. We thank the ATOMICA authors for making their codebase available. We also thank the [SAIR](https://huggingface.co/datasets/SandboxAQ/SAIR) authors for making their dataset accessible to the research community. This code repository was primarily developed by Jinhang Wei.
 
 ## Citation
 If you use the code or data in this package, please cite:
